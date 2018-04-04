@@ -1,0 +1,10 @@
+bob  	Eden1!   	00:00:03:773
+alice  	cherubims   	00:00:06:854
+ken  	magog   	00:00:13:476
+jack  	Tarshish!   	00:00:13:675
+pam  	Wisdom   	00:01:03:436
+dan  	Jerusalem11   	00:01:42:155
+harry  	Nebuchadnezzar   	00:02:26:814
+ed  	stouthearted   	00:03:16:512
+tom  	Herod   	00:03:58:657
+quin  	resisteth   	00:04:27:525
