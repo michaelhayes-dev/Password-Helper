@@ -1,0 +1,16 @@
+alice  	cherubims   	00:00:00:81
+ken  	magog   	00:00:00:101
+ed  	stouthearted   	00:00:00:323
+quin  	resisteth   	00:00:00:376
+pam  	Wisdom   	00:00:00:454
+harry  	Nebuchadnezzar   	00:00:00:512
+tom  	Herod   	00:00:00:582
+chuck  	ark1234   	00:01:34:146
+sam  	dragon1   	00:22:24:187
+nancy  	1980heavenly   	00:30:19:488
+dan  	Jerusalem11   	00:48:58:851
+rob  	emer@ld   	01:10:59:275
+frank  	thunderbolt5   	01:11:02:976
+mary  	$piritual   	01:11:03:990
+bob  	Eden1!   	02:24:57:384
+jack  	Tarshish!   	02:25:01:967

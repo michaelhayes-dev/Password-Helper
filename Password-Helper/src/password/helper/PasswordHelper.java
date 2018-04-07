@@ -144,67 +144,119 @@ public class PasswordHelper {
         //Set the start time of calculations
         System.out.println("SOLVED PASSWORDS:");
         startTime = System.currentTimeMillis();
-/*
+        
         //PERFORM THE CALCULATIONS
         //pass 1 (Plain Words)
-        System.out.println("Pass1");
+        System.out.println("Pass1 - Plain Words");
         for(int j=0; j<dictionary.size(); j++){
             String mangledPassword = dictionary.get(j) + "";
             testMangledPassword(mangledPassword, fileOut);
         }
-        System.out.println("Pass2");
-        //pass 2 (numbers on the end)
-        for(int j=0; j<dictionary.size(); j++){
-            for(int k=0; k<=99; k++){  
-                String mangledPassword = dictionary.get(j) + "" + k;
-                testMangledPassword(mangledPassword, fileOut);
-            }
-        }
-        System.out.println("Pass3");
+        System.out.println("Pass2 - Capitalization");
         //pass 3 (capitalization)
         for(int j=0; j<dictionary.size(); j++){
-            for(int k=0; k<((dictionary.get(j)+"").length()); k++){  
+            //for(int k=0; k<((dictionary.get(j)+"").length()); k++){  
                 char[] capWord = (dictionary.get(j) + "").toCharArray();
-                capWord[k] = Character.toUpperCase(capWord[k]);
+                capWord[0] = Character.toUpperCase(capWord[0]);
                 String mangledPassword = new String(capWord);
+                testMangledPassword(mangledPassword, fileOut);
+            //}
+        }
+        System.out.println("Pass3 - Plain Words with Numbers");
+        //pass 2 (numbers on the end)
+        for(int j=0; j<dictionary.size(); j++){
+            for(int k=0; k<=9999; k++){  
+                String mangledPassword = dictionary.get(j) + "" + k;
+                testMangledPassword(mangledPassword, fileOut);
+                mangledPassword = k + "" + dictionary.get(j);
                 testMangledPassword(mangledPassword, fileOut);
             }
         }
-        System.out.println("Pass4");
+        System.out.println("Pass4 - Capitalization with Numbers");
         //pass 4 (capitalization with numbers at end)
         for(int j=0; j<dictionary.size(); j++){
-            for(int k=0; k<((dictionary.get(j)+"").length()); k++){ 
-                for(int l=0; l<=99; l++){
-                    char[] capWord = (dictionary.get(j) + "").toCharArray();
-                    capWord[k] = Character.toUpperCase(capWord[k]);
+            char[] capWord = (dictionary.get(j) + "").toCharArray();
+            capWord[0] = Character.toUpperCase(capWord[0]);
+            //for(int k=0; k<((dictionary.get(j)+"").length()); k++){ 
+                for(int l=0; l<=9999; l++){
+                    capWord = (dictionary.get(j) + "").toCharArray();
+                    capWord[0] = Character.toUpperCase(capWord[0]);
                     String mangledPassword = new String(capWord) + l;
                     testMangledPassword(mangledPassword, fileOut);
+                    mangledPassword = l + new String(capWord);
+                    testMangledPassword(mangledPassword, fileOut);
                 }
-            }
+            //}
         }
         
-        char[] realLetters = "aeoilt".toCharArray();
-        char[] leetLetters = "@30!17".toCharArray();
-        System.out.println("Pass5");
+        String[] tests = "00123456789!-_".split("");
+        tests[0] = "";
+        char[] realLetters = "aaeoiiltss".toCharArray();
+        char[] leetLetters = "@430!117$5".toCharArray();
+        System.out.println("Pass5 - Leet Speak");
         //pass 5 (leet speak)
         for(int j=0; j<dictionary.size(); j++){
             for(int k=0; k<realLetters.length; k++){
                 char[] leetWord = (dictionary.get(j) + "").toCharArray();
                 for(int l=0; l<leetWord.length; l++){
-                   if(leetWord[l] == realLetters[k]){ leetWord[l] = leetLetters[k]; }             
+                   if(leetWord[l] == realLetters[k]){ leetWord[l] = leetLetters[k]; }
+                   String mangledPassword = new String(leetWord) + "";
+                   testMangledPassword(mangledPassword, fileOut);
+                   //if(leetWord[l] == leetLetters[k]){ leetWord[l] = realLetters[k]; };
                 }
-                String mangledPassword = new String(leetWord) + "";
-                testMangledPassword(mangledPassword, fileOut);
             }
         }
-*/
-        String[] tests = "00123456789!abcdefghijklmnopqrstuvwxyz".split("");
-        tests[0] = "";
-        char[] realLetters = "aeoilt".toCharArray();
-        char[] leetLetters = "@30!17".toCharArray();
+        System.out.println("Pass6 - Leet Speak with 3 symbols on beginning end or both");
+        //pass 5 (leet speak)
+        for(int j=0; j<dictionary.size(); j++){
+            for(int k=0; k<realLetters.length; k++){
+                char[] leetWord = (dictionary.get(j) + "").toCharArray();
+                for(int l=0; l<leetWord.length; l++){
+                   if(leetWord[l] == realLetters[k]){ leetWord[l] = leetLetters[k]; }
+                   for(int m=0; m<tests.length; m++){
+                       for(int n=0; n<tests.length; n++){
+                           for(int o=0; o<tests.length; o++){
+                                String mangledPassword = new String(leetWord) + "" + tests[m] + tests[n] + tests[o];
+                                testMangledPassword(mangledPassword, fileOut);
+                                mangledPassword = tests[m] + tests[n] + tests[o] + new String(leetWord) + "" + tests[m] + tests[n] + tests[o];
+                                testMangledPassword(mangledPassword, fileOut);
+                                mangledPassword = tests[m] + tests[n] + tests[o] + new String(leetWord) + "";
+                                testMangledPassword(mangledPassword, fileOut);
+                           }
+                       }
+                   }
+                   //if(leetWord[l] == leetLetters[k]){ leetWord[l] = realLetters[k]; };
+                }
+            }
+        }
         
-        System.out.println("Pass6");
+        System.out.println("Pass6 - 3 Symbols on end or beginning or both No Leet");
         //pass 6 (first capitalization with symbols at the end)
+        for(int j=0; j<dictionary.size(); j++){
+            for(int k=0; k<tests.length; k++){ 
+                for(int l=0; l<tests.length; l++){
+                    for(int m=0; m<tests.length; m++){
+                        char[] capWord = (dictionary.get(j) + "").toCharArray();
+                        capWord[0] = Character.toUpperCase(capWord[0]);
+                        String mangledPassword = new String(capWord) + "" + tests[k] + tests[l] + tests[m];
+                        testMangledPassword(mangledPassword, fileOut);
+                        mangledPassword = tests[k] + tests[l] + tests[m] + new String(capWord) + "";
+                        testMangledPassword(mangledPassword, fileOut);
+                        mangledPassword = tests[k] + tests[l] + tests[m] + new String(capWord) + "" + tests[k] + tests[l] + tests[m] ;
+                        testMangledPassword(mangledPassword, fileOut);
+                        
+                        mangledPassword = dictionary.get(j) + "" + tests[k] + tests[l] + tests[m];
+                        testMangledPassword(mangledPassword, fileOut);
+                        mangledPassword = tests[k] + tests[l] + tests[m] + dictionary.get(j) + "";
+                        testMangledPassword(mangledPassword, fileOut);
+                        mangledPassword = tests[k] + tests[l] + tests[m] + dictionary.get(j) + "" +  tests[k] + tests[l] + tests[m];
+                        testMangledPassword(mangledPassword, fileOut);
+                    }
+                }
+            }
+        }
+        /*System.out.println("Pass7");
+        //pass 7 (first capitalization with symbols at the start)
         for(int j=0; j<dictionary.size(); j++){
             for(int k=0; k<tests.length; k++){ 
                 for(int l=0; l<tests.length; l++){                  
@@ -216,9 +268,9 @@ public class PasswordHelper {
                     testMangledPassword(mangledPassword, fileOut);
                 }
             }
-        }
+        }*/
         
-        System.out.println("Pass7");
+        /*System.out.println("Pass7");
         //pass 7 (leet speak and symbols)
         for(int j=0; j<dictionary.size(); j++){
             for(int k=0; k<tests.length; k++){ 
@@ -236,26 +288,25 @@ public class PasswordHelper {
                     testMangledPassword(mangledPassword, fileOut);
                 }
             }
-        }
-        System.out.println("Pass7");
-        //pass 7 (additive leet speak and symbols)
+        }*/
+        /*System.out.println("Pass7 - Symbols at Start and End");
+        //pass 7 (symbols at start and end)
         for(int j=0; j<dictionary.size(); j++){
             for(int k=0; k<tests.length; k++){ 
                 for(int l=0; l<tests.length; l++){
-                    char[] leetWord = (dictionary.get(j) + "").toCharArray();
-                    for(int m=0; m<realLetters.length; m++){
-                        for(int n=0; n<leetWord.length; n++){
-                           if(leetWord[n] == realLetters[m]){ leetWord[n] = leetLetters[m]; }             
+                    for(int m=0; m<tests.length; m++){
+                        for(int n=0; n<tests.length; n++){
+                            char[] capWord = (dictionary.get(j) + "").toCharArray();
+                            String mangledPassword = tests[m] + tests[n] + new String(capWord) + "" + tests[k] + tests[l];
+                            testMangledPassword(mangledPassword, fileOut);
+                            capWord[0] = Character.toUpperCase(capWord[0]);
+                            mangledPassword = tests[m] + tests[n] + new String(capWord) + "" + tests[k] + tests[l];
+                            testMangledPassword(mangledPassword, fileOut);
                         }
-                        String mangledPassword = new String(leetWord) + "" + tests[k] + tests[l];
-                        testMangledPassword(mangledPassword, fileOut);
                     }
-                    char[] capWord = (dictionary.get(j) + "").toCharArray();
-                    String mangledPassword = new String(capWord) + "" + tests[k] + tests[l];
-                    testMangledPassword(mangledPassword, fileOut);
                 }
             }
-        }
+        }*/
 
         System.out.println();    
     }
@@ -276,14 +327,6 @@ public class PasswordHelper {
                 hashes.set(i, null);
             }
         }
-    }
-    
-    private static ArrayList removeItems(ArrayList indices, ArrayList items){
-        for(int i=0; i<indices.size(); i++){
-            int index = (int) indices.get(i);
-            items.remove(index);
-        }
-        return items;
     }
     
     private final static char[] hexArray = "0123456789abcdef".toCharArray();
